@@ -41,9 +41,9 @@ module Searchlogic
         end
         html_options[:class] = css_classes.join(" ")
       end
-      url_options = {
+      url_options = params.merge({
         options[:params_scope] => search.conditions.merge( { :order => new_scope } )
-      }.deep_merge(options[:params] || {})
+      }).deep_merge(options[:params] || {})
       link_to options[:as], url_for(url_options), html_options
     end
 
@@ -54,7 +54,7 @@ module Searchlogic
         options = args.extract_options!
         options[:html] ||= {}
         options[:html][:method] ||= :get
-        options[:url] ||= request.path
+        options[:url] ||= url_for(params.reject{ |key, value| key.to_sym == :search })
         args.unshift(:search) if args.first == search_obj
         args << options
       end
