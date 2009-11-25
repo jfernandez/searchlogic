@@ -54,7 +54,7 @@ module Searchlogic
         options = args.extract_options!
         options[:html] ||= {}
         options[:html][:method] ||= :get
-        options[:url] ||= url_for
+        options[:url] ||= request.path
         args.unshift(:search) if args.first == search_obj
         args << options
       end
